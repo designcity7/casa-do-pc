@@ -38,17 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Produtos (dados simples; em produção, buscar via API)
   const PRODUCTS = {
     'pc-1': { id:'pc-1', title:'PC Gamer Avançado', price:6499.00, img:'https://source.unsplash.com/1200x900/?desktop,computer', desc:'Ryzen 7, RTX 4070, 16GB RAM, SSD 1TB.' },
-    'case-1': { id:'case-1', title:'Capinha Silicon', price:49.90, img:'https://source.unsplash.com/1200x900/?phone-case', desc:'Capinha protetora com boa aderência.' },
-    'jbl-1': { id:'jbl-1', title:'JBL Bluetooth Box', price:399.00, img:'https://source.unsplash.com/1200x900/?jbl,speaker', desc:'Som potente e conexão Bluetooth.' },
-    'film-1': { id:'film-1', title:'Película Temperada', price:29.90, img:'https://source.unsplash.com/1200x900/?screen-protector,phone', desc:'Película protetora resistente.' }
+    'case-1': { id:'case-1', title:'Capinha Silicon', price:49.90, img:'https://source.unsplash.com/1200x900/?phone-case,phone-accessory', desc:'Capinha protetora com boa aderência.' },
+    'jbl-1': { id:'jbl-1', title:'JBL Bluetooth Box', price:399.00, img:'https://source.unsplash.com/1200x900/?jbl,speaker,bluetooth', desc:'Som potente e conexão Bluetooth.' },
+    'film-1': { id:'film-1', title:'Película Temperada', price:29.90, img:'https://source.unsplash.com/1200x900/?screen-protector,tempered,phone', desc:'Película protetora resistente.' }
   };
 
   // Serviços (adicionados com base no perfil que você enviou)
   const SERVICES = {
-    'serv-1': { id:'serv-1', title:'Conserto de Celulares', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?phone-repair,cellphone', desc:'Troca de tela, tampa, bateria, diagnóstico e manutenção geral.' },
-    'serv-2': { id:'serv-2', title:'Manutenção de Computadores', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?laptop-repair,notebook', desc:'Limpeza interna, troca de peças, montagem e otimização de desempenho.' },
-    'serv-3': { id:'serv-3', title:'Reparo de Videogames e Controles', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?game-console,repair', desc:'Conserto de consoles, limpeza de leitores, reparo de drift em controles.' },
-    'serv-4': { id:'serv-4', title:'Limpeza e Reparos em Caixas de Som', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?speaker,cleaning', desc:'Higienização, troca de componentes e conserto de falhas em caixas e fones.' }
+    'serv-1': { id:'serv-1', title:'Conserto de Celulares', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?phone,screen,repair', desc:'Troca de tela, tampa, bateria, diagnóstico e manutenção geral.' },
+    'serv-2': { id:'serv-2', title:'Manutenção de Computadores', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?laptop,repair,technician', desc:'Limpeza interna, troca de peças, montagem e otimização de desempenho.' },
+    'serv-3': { id:'serv-3', title:'Reparo de Videogames e Controles', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?game-controller,repair,console', desc:'Conserto de consoles, limpeza de leitores, reparo de drift em controles.' },
+    'serv-4': { id:'serv-4', title:'Limpeza e Reparos em Caixas de Som', priceText:'Orçamento', img:'https://source.unsplash.com/1200x800/?speaker,repair,cleaning', desc:'Higienização, troca de componentes e conserto de falhas em caixas e fones.' }
   };
 
   // Modal produto/serviço

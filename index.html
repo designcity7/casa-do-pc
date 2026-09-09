@@ -1,265 +1,35 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Casa do PC — Loja e Assistência</title>
-  <meta name="description" content="Casa do PC — Venda, montagem, limpeza e conserto de aparelhos: celulares, computadores, videogames, caixas de som e acessórios." />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="#home">Casa do PC</a>
-      <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#produtos">Produtos</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#contato">Contato</a>
-        <button id="cart-btn" aria-label="Ver carrinho">Carrinho (<span id="cart-count">0</span>)</button>
-      </nav>
-      <button class="burger" aria-label="Abrir menu" id="burger">☰</button>
-    </div>
-  </header>
+scripts.js
++56
+-184
+ document.querySelectorAll('.reveal:not(.visible)').forEach(element=>observer.observe(element));
+}
+function renderProducts(){productGrid.innerHTML=products.map(productTemplate).join('');observeReveals()}
+function saveCart(){localStorage.setItem('casa-do-pc-cart',JSON.stringify(cart))}
+function renderCart(){
+ cartCount.textContent=cart.reduce((total,item)=>total+item.quantity,0);
+ cartItems.innerHTML=cart.length?cart.map(item=>{const product=products.find(entry=>entry.id===item.id);return `<div class="cart-item"><img src="${product.image}" alt=""><div><h4>${product.name}</h4><p>${item.quantity} × ${money(product.price)}</p></div><button data-remove="${item.id}">Remover</button></div>`}).join(''):'<div class="cart-empty"><b>Seu carrinho está vazio.</b><p>Escolha seus equipamentos e volte aqui.</p></div>';
+ const total=cart.reduce((sum,item)=>{const product=products.find(entry=>entry.id===item.id);return sum+product.price*item.quantity},0);
+ cartTotal.textContent=money(total);
+}
+function showToast(message){clearTimeout(toastTimer);toast.textContent=message;toast.classList.add('visible');toastTimer=setTimeout(()=>toast.classList.remove('visible'),2500)}
+function openCart(){cartDrawer.removeAttribute('inert');cartDrawer.setAttribute('aria-hidden','false');scrim.classList.add('visible');document.body.classList.add('locked');document.querySelector('#close-cart').focus()}
+function closeCart(){cartDrawer.setAttribute('inert','');cartDrawer.setAttribute('aria-hidden','true');scrim.classList.remove('visible');document.body.classList.remove('locked');document.querySelector('#cart-button').focus()}
 
-  <main>
-    <!-- HERO / Apresentação -->
-    <section id="home" class="hero" style="background-image: url('https://source.unsplash.com/1600x900/?workspace,computer');">
-      <div class="hero-overlay">
-        <div class="container hero-content">
-          <h1 class="fade-in">Bem-vindo à Casa do PC</h1>
-          <p class="fade-in delay-1">Venda, montagem, limpeza e conserto de aparelhos — celulares, computadores, videogames, caixas de som e acessórios.</p>
-          <div class="hero-ctas fade-in delay-2">
-            <a class="btn primary" href="#produtos">Ver Produtos</a>
-            <a class="btn ghost" href="#servicos">Nossos Serviços</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURES / Destaques -->
-    <section class="features container">
-      <div class="feature fade-in">
-        <h3>Montagem Profissional</h3>
-        <p>Montamos seu PC com componentes de qualidade e garantia.</p>
-      </div>
-      <div class="feature fade-in delay-1">
-        <h3>Envio Rápido</h3>
-        <p>Entrega em todo o Brasil com rastreamento.</p>
-      </div>
-      <div class="feature fade-in delay-2">
-        <h3>Suporte Local</h3>
-        <p>Atendimento via WhatsApp e e-mail com suporte técnico.</p>
-      </div>
-    </section>
-
-    <!-- PRODUTOS -->
-    <section id="produtos" class="products container">
-      <h2 class="section-title fade-in">Produtos em destaque</h2>
-
-      <div class="products-grid">
-        <!-- Produto 1: Desktop -->
-        <article class="product-card fade-in">
-          <img src="https://source.unsplash.com/800x600/?desktop,computer" alt="PC Gamer - Casa do PC" />
-          <div class="product-info">
-            <h3>PC Gamer Avançado</h3>
-            <p class="price">R$ 6.499,00</p>
-            <p class="excerpt">Ryzen 7, RTX 4070, 16GB RAM, SSD 1TB — pronto para jogos e edição.</p>
-            <div class="actions">
-              <button class="btn small view-product" data-id="pc-1">Ver</button>
-              <button class="btn small add-cart" data-id="pc-1">Adicionar</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Produto 2: Capinha -->
-        <article class="product-card fade-in delay-1">
-          <img src="https://source.unsplash.com/800x600/?phone-case,phone-accessory" alt="Capinha para celular - Casa do PC" />
-          <div class="product-info">
-            <h3>Capinha Silicon</h3>
-            <p class="price">R$ 49,90</p>
-            <p class="excerpt">Proteção elegante para vários modelos.</p>
-            <div class="actions">
-              <button class="btn small view-product" data-id="case-1">Ver</button>
-              <button class="btn small add-cart" data-id="case-1">Adicionar</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Produto 3: Caixa de som JBL -->
-        <article class="product-card fade-in delay-2">
-          <img src="https://source.unsplash.com/800x600/?jbl,speaker,bluetooth" alt="Caixa de som JBL - Casa do PC" />
-          <div class="product-info">
-            <h3>JBL Bluetooth Box</h3>
-            <p class="price">R$ 399,00</p>
-            <p class="excerpt">Som potente, bateria de longa duração.</p>
-            <div class="actions">
-              <button class="btn small view-product" data-id="jbl-1">Ver</button>
-              <button class="btn small add-cart" data-id="jbl-1">Adicionar</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Produto 4: Película -->
-        <article class="product-card fade-in delay-3">
-          <img src="https://source.unsplash.com/800x600/?screen-protector,tempered,phone" alt="Película protetora - Casa do PC" />
-          <div class="product-info">
-            <h3>Película Temperada</h3>
-            <p class="price">R$ 29,90</p>
-            <p class="excerpt">Proteção contra riscos e impactos leves.</p>
-            <div class="actions">
-              <button class="btn small view-product" data-id="film-1">Ver</button>
-              <button class="btn small add-cart" data-id="film-1">Adicionar</button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- SERVIÇOS -->
-    <section id="servicos" class="services container">
-      <h2 class="section-title fade-in">Serviços — Limpeza e Conserto</h2>
-      <p class="fade-in delay-1">Fazemos limpeza interna, manutenção e conserto de todos os tipos de aparelhos: celulares, notebooks, desktops, videogames, caixas de som e acessórios.</p>
-
-      <div class="services-grid">
-        <article class="service-card fade-in">
-          <img src="https://source.unsplash.com/1200x800/?phone,screen,repair" alt="Reparo de celular" />
-          <div class="service-info">
-            <h3>Conserto de Celulares</h3>
-            <p>Troca de tela, tampa, bateria, diagnóstico e manutenção geral.</p>
-            <div class="actions">
-              <button class="btn small view-service" data-id="serv-1">Ver serviço</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="service-card fade-in delay-1">
-          <img src="https://source.unsplash.com/1200x800/?laptop,repair,technician" alt="Reparo de notebook" />
-          <div class="service-info">
-            <h3>Manutenção de Computadores</h3>
-            <p>Limpeza interna, troca de peças, montagem e otimização de desempenho.</p>
-            <div class="actions">
-              <button class="btn small view-service" data-id="serv-2">Ver serviço</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="service-card fade-in delay-2">
-          <img src="https://source.unsplash.com/1200x800/?game-controller,repair,console" alt="Reparo de videogame" />
-          <div class="service-info">
-            <h3>Reparo de Videogames e Controles</h3>
-            <p>Conserto de consoles, limpeza de leitores, reparo de drift em controles e manutenção.</p>
-            <div class="actions">
-              <button class="btn small view-service" data-id="serv-3">Ver serviço</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="service-card fade-in delay-3">
-          <img src="https://source.unsplash.com/1200x800/?speaker,repair,cleaning" alt="Limpeza de caixas de som" />
-          <div class="service-info">
-            <h3>Limpeza e Reparos em Caixas de Som</h3>
-            <p>Higienização, troca de componentes e conserto de falhas em caixas e fones.</p>
-            <div class="actions">
-              <button class="btn small view-service" data-id="serv-4">Ver serviço</button>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <p class="fade-in delay-2" style="margin-top:1rem">Baseado no perfil que você enviou, incluí serviços que já aparecem nas publicações: limpeza de Xbox, troca de tampa de iPhone, manutenção de celulares e computadores. Posso ajustar textos e preços conforme suas orientações.</p>
-    </section>
-
-    <!-- PARALLAX / APRESENTAÇÃO -->
-    <section class="parallax" style="background-image: url('https://source.unsplash.com/1600x900/?electronics,shop');">
-      <div class="parallax-inner">
-        <h2 class="fade-in">Montagens personalizadas e garantia</h2>
-        <p class="fade-in delay-1">Testes profissionais antes do envio e suporte pós-venda.</p>
-      </div>
-    </section>
-
-    <!-- SOBRE -->
-    <section id="sobre" class="container about">
-      <h2 class="section-title fade-in">Sobre a Casa do PC</h2>
-      <p class="fade-in delay-1">Somos especialistas em hardware e assistência técnica. Atendemos celulares, computadores, videogames e acessórios com transparência e garantia.</p>
-      <div class="about-grid fade-in delay-2">
-        <div>
-          <h4>Missão</h4>
-          <p>Levar boa performance e atendimento transparente para clientes de todas as regiões.</p>
-        </div>
-        <div>
-          <h4>Visão</h4>
-          <p>Ser referência em qualidade e confiança no e-commerce e assistência técnica.</p>
-        </div>
-        <div>
-          <h4>Contato</h4>
-          <p>WhatsApp: (xx) xxxxx-xxxx<br/>Email: vendas@casadopc.com.br<br/>Endereço: Av. Dr. Otavio Soares, 58 loja C, Ponte Nova</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTEMUNHOS -->
-    <section class="container testimonials">
-      <h2 class="section-title fade-in">O que nossos clientes dizem</h2>
-      <div class="testimonials-grid">
-        <blockquote class="fade-in">
-          "Comprei meu PC aqui — montagem impecável e entrega rápida." — Ana S.
-        </blockquote>
-        <blockquote class="fade-in delay-1">
-          "A caixa de som JBL chegou bem embalada e com som excelente." — Ricardo P.
-        </blockquote>
-      </div>
-    </section>
-
-    <!-- CONTATO -->
-    <section id="contato" class="container contact">
-      <h2 class="section-title fade-in">Fale conosco</h2>
-      <form id="contact-form" class="fade-in delay-1">
-        <label>
-          Nome
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Mensagem
-          <textarea name="message" rows="4" required></textarea>
-        </label>
-        <button class="btn primary" type="submit">Enviar</button>
-      </form>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© <span id="year"></span> Casa do PC — Todos os direitos reservados.</div>
-      <div>Desenvolvido por Casa do PC</div>
-    </div>
-  </footer>
-
-  <!-- Modal produto/serviço -->
-  <div id="product-modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" id="modal-close">×</button>
-      <div id="modal-body"></div>
-    </div>
-  </div>
-
-  <!-- Carrinho simples -->
-  <div id="cart-panel" class="cart-panel" aria-hidden="true">
-    <button id="close-cart" aria-label="Fechar carrinho">×</button>
-    <h3>Carrinho</h3>
-    <div id="cart-items"></div>
-    <div class="cart-footer">
-      <div>Total: <strong id="cart-total">R$ 0,00</strong></div>
-      <button id="checkout" class="btn primary">Finalizar Compra</button>
-    </div>
-  </div>
-
-  <script src="scripts.js" defer></script>
-</body>
-</html>
+document.addEventListener('click',event=>{
+ const addButton=event.target.closest('[data-add]');const removeButton=event.target.closest('[data-remove]');const toastButton=event.target.closest('[data-toast]');
+ if(addButton){const item=cart.find(entry=>entry.id===addButton.dataset.add);if(item)item.quantity+=1;else cart.push({id:addButton.dataset.add,quantity:1});saveCart();renderCart();showToast('Produto adicionado ao carrinho!')}
+ if(removeButton){cart=cart.filter(entry=>entry.id!==removeButton.dataset.remove);saveCart();renderCart()}
+ if(toastButton&&!addButton)showToast(toastButton.dataset.toast);
+});
+document.querySelector('#cart-button').addEventListener('click',openCart);
+document.querySelector('#close-cart').addEventListener('click',closeCart);
+scrim.addEventListener('click',closeCart);
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeCart()});
+const menuButton=document.querySelector('#menu-button');const navigation=document.querySelector('#main-nav');
+menuButton.addEventListener('click',()=>{const isOpen=navigation.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(isOpen))});
+navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navigation.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}));
+document.querySelector('#show-more').addEventListener('click',event=>{document.querySelectorAll('.hidden-product').forEach(card=>card.classList.remove('hidden-product'));event.currentTarget.remove();showToast('Todos os produtos foram exibidos.')});
+document.querySelector('#newsletter-form').addEventListener('submit',event=>{event.preventDefault();showToast('Cadastro realizado! Bem-vindo à comunidade.');event.currentTarget.reset()});
+document.querySelector('#checkout').addEventListener('click',()=>showToast(cart.length?'Checkout demonstrativo — integração em breve.':'Adicione um produto antes de continuar.'));
+document.querySelector('#year').textContent=new Date().getFullYear();
+renderProducts();renderCart();observeReveals();

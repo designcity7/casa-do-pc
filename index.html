@@ -1,35 +1,42 @@
-scripts.js
-+56
--184
- document.querySelectorAll('.reveal:not(.visible)').forEach(element=>observer.observe(element));
-}
-function renderProducts(){productGrid.innerHTML=products.map(productTemplate).join('');observeReveals()}
-function saveCart(){localStorage.setItem('casa-do-pc-cart',JSON.stringify(cart))}
-function renderCart(){
- cartCount.textContent=cart.reduce((total,item)=>total+item.quantity,0);
- cartItems.innerHTML=cart.length?cart.map(item=>{const product=products.find(entry=>entry.id===item.id);return `<div class="cart-item"><img src="${product.image}" alt=""><div><h4>${product.name}</h4><p>${item.quantity} × ${money(product.price)}</p></div><button data-remove="${item.id}">Remover</button></div>`}).join(''):'<div class="cart-empty"><b>Seu carrinho está vazio.</b><p>Escolha seus equipamentos e volte aqui.</p></div>';
- const total=cart.reduce((sum,item)=>{const product=products.find(entry=>entry.id===item.id);return sum+product.price*item.quantity},0);
- cartTotal.textContent=money(total);
-}
-function showToast(message){clearTimeout(toastTimer);toast.textContent=message;toast.classList.add('visible');toastTimer=setTimeout(()=>toast.classList.remove('visible'),2500)}
-function openCart(){cartDrawer.removeAttribute('inert');cartDrawer.setAttribute('aria-hidden','false');scrim.classList.add('visible');document.body.classList.add('locked');document.querySelector('#close-cart').focus()}
-function closeCart(){cartDrawer.setAttribute('inert','');cartDrawer.setAttribute('aria-hidden','true');scrim.classList.remove('visible');document.body.classList.remove('locked');document.querySelector('#cart-button').focus()}
+        <button class="btn primary" type="submit">Enviar</button>
+      </form>
+    </section>
 
-document.addEventListener('click',event=>{
- const addButton=event.target.closest('[data-add]');const removeButton=event.target.closest('[data-remove]');const toastButton=event.target.closest('[data-toast]');
- if(addButton){const item=cart.find(entry=>entry.id===addButton.dataset.add);if(item)item.quantity+=1;else cart.push({id:addButton.dataset.add,quantity:1});saveCart();renderCart();showToast('Produto adicionado ao carrinho!')}
- if(removeButton){cart=cart.filter(entry=>entry.id!==removeButton.dataset.remove);saveCart();renderCart()}
- if(toastButton&&!addButton)showToast(toastButton.dataset.toast);
-});
-document.querySelector('#cart-button').addEventListener('click',openCart);
-document.querySelector('#close-cart').addEventListener('click',closeCart);
-scrim.addEventListener('click',closeCart);
-document.addEventListener('keydown',event=>{if(event.key==='Escape')closeCart()});
-const menuButton=document.querySelector('#menu-button');const navigation=document.querySelector('#main-nav');
-menuButton.addEventListener('click',()=>{const isOpen=navigation.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(isOpen))});
-navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{navigation.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}));
-document.querySelector('#show-more').addEventListener('click',event=>{document.querySelectorAll('.hidden-product').forEach(card=>card.classList.remove('hidden-product'));event.currentTarget.remove();showToast('Todos os produtos foram exibidos.')});
-document.querySelector('#newsletter-form').addEventListener('submit',event=>{event.preventDefault();showToast('Cadastro realizado! Bem-vindo à comunidade.');event.currentTarget.reset()});
-document.querySelector('#checkout').addEventListener('click',()=>showToast(cart.length?'Checkout demonstrativo — integração em breve.':'Adicione um produto antes de continuar.'));
-document.querySelector('#year').textContent=new Date().getFullYear();
-renderProducts();renderCart();observeReveals();
+    <section class="promo" id="monte"><div class="shell promo__inner"><div class="promo__copy reveal"><span class="eyebrow">Oferta especial</span><h2>ECONOMIZE ATÉ <em>20%</em></h2><p>Seu setup completo, montado por especialistas e testado antes da entrega.</p><a class="button button--outline" href="#ofertas">Ver promoções</a></div><div class="promo__visual reveal reveal--delay"><div class="promo__ring"></div><div class="promo__products"></div><div class="promo__badge"><b>-20%</b><span>SETUP COMPLETO</span></div></div></div></section>
+    <section class="section products" id="ofertas"><div class="shell"><div class="section-heading reveal"><span class="eyebrow eyebrow--dark">Escolhas da comunidade</span><h2>MAIS VENDIDOS</h2></div><div class="product-grid" id="product-grid"></div><div class="center reveal"><button class="button button--dark" id="show-more">Ver todos os produtos</button></div></div></section>
+    <section class="benefits" id="servicos"><div class="shell benefits__grid"><article><span>◇</span><div><h3>Produtos premium</h3><p>Seleção das melhores marcas do mercado.</p></div></article><article><span>⚙</span><div><h3>Performance real</h3><p>Componentes testados para alto desempenho.</p></div></article><article><span>♢</span><div><h3>Garantia de verdade</h3><p>Todos os produtos possuem garantia.</p></div></article><article><span>♧</span><div><h3>Especialistas à disposição</h3><p>Suporte antes e depois da sua compra.</p></div></article></div></section>
+    <section class="reviews section"><div class="shell"><div class="section-heading section-heading--light reveal"><span class="eyebrow">Experiências reais</span><h2>QUEM COMPRA, RECOMENDA</h2></div><div class="review-grid"><blockquote class="reveal"><p>“Atendimento excelente e entrega antes do prazo. O PC chegou pronto para jogar!”</p><footer><span class="avatar">JL</span><div><b>Juliano L.</b><small>★★★★★</small></div></footer></blockquote><blockquote class="reveal"><p>“Me ajudaram a escolher cada peça. A máquina ficou linda, silenciosa e muito rápida.”</p><footer><span class="avatar avatar--pink">SM</span><div><b>Sophie M.</b><small>★★★★★</small></div></footer></blockquote><blockquote class="reveal"><p>“Site fácil, preço justo e suporte que realmente entende de hardware. Recomendo!”</p><footer><span class="avatar avatar--blue">TA</span><div><b>Thomas A.</b><small>★★★★★</small></div></footer></blockquote></div></div></section>
+    <section class="newsletter" id="contato"><div class="shell newsletter__inner"><div><span class="eyebrow eyebrow--dark">Fique por dentro</span><h2>OFERTAS DIRETO NO SEU E-MAIL</h2><p>Novidades, lançamentos e descontos exclusivos. Sem spam.</p></div><form id="newsletter-form"><label class="sr-only" for="email">Seu melhor e-mail</label><input id="email" type="email" placeholder="Seu melhor e-mail" required><button class="button button--primary" type="submit">Quero receber</button></form></div></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Casa do PC — Todos os direitos reservados.</div>
+      <div>Desenvolvido por Casa do PC</div>
+    </div>
+  </footer>
+
+  <!-- Modal produto/serviço -->
+  <div id="product-modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Carrinho simples -->
+  <div id="cart-panel" class="cart-panel" aria-hidden="true">
+    <button id="close-cart" aria-label="Fechar carrinho">×</button>
+    <h3>Carrinho</h3>
+    <div id="cart-items"></div>
+    <div class="cart-footer">
+      <div>Total: <strong id="cart-total">R$ 0,00</strong></div>
+      <button id="checkout" class="btn primary">Finalizar Compra</button>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="shell footer__grid"><div class="footer__about"><a class="brand brand--footer" href="#inicio"><span class="brand__mark">C</span><span><strong>CASA DO</strong><small>PC</small></span></a><p>Tecnologia, performance e suporte para elevar sua experiência ao próximo nível.</p><div class="socials"><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div><div><h3>Loja</h3><a href="#categorias">PC Gamer</a><a href="#categorias">Periféricos</a><a href="#categorias">Componentes</a><a href="#ofertas">Ofertas</a></div><div><h3>Ajuda</h3><a href="#servicos">Assistência técnica</a><a href="#contato">Fale conosco</a><a href="#">Trocas e devoluções</a><a href="#">Política de privacidade</a></div><div><h3>Contato</h3><p>Av. Dr. Otávio Soares, 58<br>Ponte Nova — MG</p><p>(31) 99999-9999<br>contato@casadopc.com.br</p></div></div><div class="shell footer__bottom"><span>© <span id="year"></span> Casa do PC. Todos os direitos reservados.</span><span>Compra segura • PIX • Visa • Mastercard</span></div></footer>
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" inert><div class="cart-drawer__header"><div><span class="eyebrow eyebrow--dark">Sua seleção</span><h2>Carrinho</h2></div><button id="close-cart" aria-label="Fechar carrinho">×</button></div><div id="cart-items" class="cart-items"></div><div class="cart-drawer__footer"><div><span>Total</span><strong id="cart-total">R$ 0,00</strong></div><button class="button button--primary" id="checkout">Finalizar compra</button></div></aside><div class="scrim" id="scrim"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="scripts.js" defer></script>
+</body>
+</html>

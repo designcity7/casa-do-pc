@@ -1,3 +1,7 @@
+
+
++23
+-111
 :root{
   --max-width:1200px;
   --accent:#0b74de;
@@ -39,73 +43,3 @@ body{margin:0;background:var(--bg);line-height:1.5;-webkit-font-smoothing:antial
 .hero p{margin:0 0 1.2rem;font-size:1.05rem}
 .hero-ctas .btn{margin-right:0.6rem}
 
-/* Features */
-.features{display:flex;gap:1.5rem;justify-content:space-between;margin-top:-3rem}
-.feature{background:var(--card-bg);padding:1.2rem;border-radius:12px;box-shadow:var(--shadow);flex:1}
-
-/* Products */
-.products .section-title{margin-bottom:1rem;text-align:center}
-.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
-.product-card{background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.product-card img{width:100%;height:180px;object-fit:cover}
-.product-info{padding:1rem;display:flex;flex-direction:column;gap:.5rem}
-.price{font-weight:700;color:var(--accent)}
-.actions{margin-top:auto;display:flex;gap:.5rem}
-
-/* Services */
-.services .section-title{margin-bottom:0.4rem;text-align:left}
-.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
-.service-card{background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.service-card img{width:100%;height:180px;object-fit:cover}
-.service-info{padding:1rem;display:flex;flex-direction:column;gap:.4rem}
-.service-info p{color:var(--muted);font-size:0.95rem}
-
-/* Parallax */
-.parallax{height:320px;background-attachment:fixed;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
-.parallax-inner{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35));padding:2rem;border-radius:12px}
-
-/* About, testimonials, contact */
-.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
-.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
-.testimonials-grid blockquote{background:var(--card-bg);padding:1rem;border-radius:10px;box-shadow:var(--shadow);font-style:italic}
-
-/* Footer */
-.site-footer{padding:1rem 0;background:#fff;border-top:1px solid rgba(0,0,0,0.04);margin-top:2rem}
-.footer-inner{display:flex;justify-content:space-between;align-items:center}
-
-/* Modal */
-.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);opacity:0;pointer-events:none;transition:opacity .2s}
-.modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
-.modal-content{background:#fff;border-radius:12px;max-width:900px;width:90%;padding:1rem;position:relative}
-.modal-close{position:absolute;right:10px;top:8px;border:0;background:transparent;font-size:1.6rem}
-
-/* Cart panel */
-.cart-panel{position:fixed;right:0;top:0;height:100%;width:360px;background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,0.08);transform:translateX(110%);transition:transform .25s;padding:1rem;z-index:60}
-.cart-panel[aria-hidden="false"]{transform:translateX(0)}
-.cart-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
-
-/* Animations: fade-in */
-.fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
-.fade-in.in-view{opacity:1;transform:none}
-.delay-1{transition-delay:.12s}
-.delay-2{transition-delay:.24s}
-.delay-3{transition-delay:.36s}
-
-/* Responsive */
-@media(max-width:1000px){
-  .products-grid{grid-template-columns:repeat(2,1fr)}
-  .services-grid{grid-template-columns:repeat(2,1fr)}
-  .about-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:700px){
-  .products-grid{grid-template-columns:1fr}
-  .services-grid{grid-template-columns:1fr}
-  .features{flex-direction:column;margin-top:1rem}
-  .nav{display:none}
-  .burger{display:block}
-  .header-inner{gap:1rem}
-  .parallax{background-attachment:scroll}
-}
-
-/* small helpers */
-.container small{color:var(--muted)}
